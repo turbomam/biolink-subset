@@ -1,0 +1,22 @@
+type Entity
+  {
+    id: Uriorcurie!
+    name: String
+    description: String
+    primaryEmail: String
+    ageInYears: Integer
+    vitalStatus: PersonStatus
+  }
+
+type EntityCollection
+  {
+    entries: [Entity]
+  }
+
+type NamedThing
+  {
+    id: Uriorcurie!
+    name: String
+    description: String
+  }
+

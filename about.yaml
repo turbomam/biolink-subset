@@ -1,0 +1,7 @@
+---
+name: biolink_subset
+author: Mark Andrew Miller <MAM@lbl.gov>
+description: illustrates subsetting the BIlink schema with sheets_and_friends do-shuttle
+source_schema_path: src/biolink_subset/schema/biolink_subset.yaml
+google_sheet_id: 1wVoaiFg47aT9YWNeRfTZ8tYHN8s8PAuDx5i2HUcDpvQ
+google_sheet_tabs: personinfo enums

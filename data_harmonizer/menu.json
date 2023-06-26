@@ -1,0 +1,9 @@
+{
+  "biolink_subset": {
+    "Person": {
+      "name": "Person",
+      "status": "published",
+      "display": true
+    }
+  }
+}

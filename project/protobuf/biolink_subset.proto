@@ -1,0 +1,22 @@
+// Represents a entity
+message Entity
+ {
+  uriorcurie id = 0
+  string name = 0
+  string description = 0
+  string primaryEmail = 0
+  integer ageInYears = 0
+  personStatus vitalStatus = 0
+ }
+// A holder for entity objects
+message EntityCollection
+ {
+ repeated  entity entries = 0
+ }
+// A generic grouping for any identifiable entity
+message NamedThing
+ {
+  uriorcurie id = 0
+  string name = 0
+  string description = 0
+ }
