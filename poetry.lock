@@ -96,10 +96,22 @@ tests = ["coverage", "more-itertools", "pytest"]
 web = ["bootstrap-flask (<=2.0.0)", "flasgger", "flask", "markdown", "pyyaml", "rdflib", "rdflib-jsonld"]
 
 [[package]]
+name = "boltons"
+version = "23.0.0"
+description = "When they're not builtins, they're boltons."
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "boltons-23.0.0-py2.py3-none-any.whl", hash = "sha256:f716a1b57698a5b19062f3146cb5ce3549904028a2f267c2c0cf584eea3ad75b"},
+    {file = "boltons-23.0.0.tar.gz", hash = "sha256:8c50a71829525835ca3c849c7ed2511610c972b4dddfcd41a4a5447222beb4b0"},
+]
+
+[[package]]
 name = "cachetools"
 version = "5.3.1"
 description = "Extensible memoizing collections and decorators"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -268,6 +280,21 @@ files = [
 colorama = {version = "*", markers = "platform_system == \"Windows\""}
 
 [[package]]
+name = "click-log"
+version = "0.4.0"
+description = "Logging integration for Click"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "click-log-0.4.0.tar.gz", hash = "sha256:3970f8570ac54491237bcdb3d8ab5e3eef6c057df29f8c3d1151a51a9c23b975"},
+    {file = "click_log-0.4.0-py2.py3-none-any.whl", hash = "sha256:a43e394b528d52112af599f2fc9e4b7cf3c15f94e53581f74fa6867e68c91756"},
+]
+
+[package.dependencies]
+click = "*"
+
+[[package]]
 name = "colorama"
 version = "0.4.6"
 description = "Cross-platform colored terminal text."
@@ -386,6 +413,22 @@ files = [
 test = ["pytest (>=6)"]
 
 [[package]]
+name = "face"
+version = "20.1.1"
+description = "A command-line application framework (and CLI parser). Friendly for users, full-featured for developers."
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "face-20.1.1-py2-none-any.whl", hash = "sha256:3790311a7329e4b0d90baee346eecad54b337629576edf3a246683a5f0d24446"},
+    {file = "face-20.1.1-py3-none-any.whl", hash = "sha256:ca3a1d8b8b6aa8e61d62a300e9ee24e09c062aceda549e9a640128e4fa0f4559"},
+    {file = "face-20.1.1.tar.gz", hash = "sha256:7d59ca5ba341316e58cf72c6aff85cca2541cf5056c4af45cb63af9a814bed3e"},
+]
+
+[package.dependencies]
+boltons = ">=20.0.0"
+
+[[package]]
 name = "fqdn"
 version = "1.5.1"
 description = "Validates fully-qualified domain names against RFC 1123, so that they are acceptable to modern bowsers"
@@ -433,6 +476,26 @@ python-dateutil = ">=2.8.1"
 dev = ["flake8", "markdown", "twine", "wheel"]
 
 [[package]]
+name = "glom"
+version = "23.3.0"
+description = "A declarative object transformer and formatter, for conglomerating nested data."
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "glom-23.3.0-py3-none-any.whl", hash = "sha256:b6883b686ab6cab3e4f081bb4a5502e9a997024f08c5fecf59214e75a62c8f4b"},
+    {file = "glom-23.3.0.tar.gz", hash = "sha256:031699280fa4666048e43d2eab68be1044ffcd487ab74acb792de2eeb0bc2515"},
+]
+
+[package.dependencies]
+attrs = "*"
+boltons = ">=19.3.0"
+face = "20.1.1"
+
+[package.extras]
+yaml = ["PyYAML"]
+
+[[package]]
 name = "google"
 version = "3.0.0"
 description = "Python bindings to the Google search engine."
@@ -451,7 +514,7 @@ beautifulsoup4 = "*"
 name = "google-api-core"
 version = "2.11.1"
 description = "Google API client core library"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -474,7 +537,7 @@ grpcio-gcp = ["grpcio-gcp (>=0.2.2,<1.0.dev0)"]
 name = "google-api-python-client"
 version = "2.90.0"
 description = "Google API Client Library for Python"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -493,7 +556,7 @@ uritemplate = ">=3.0.1,<5"
 name = "google-auth"
 version = "2.20.0"
 description = "Google Authentication Library"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -519,7 +582,7 @@ requests = ["requests (>=2.20.0,<3.0.0.dev0)"]
 name = "google-auth-httplib2"
 version = "0.1.0"
 description = "Google Authentication Library: httplib2 transport"
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 files = [
@@ -536,7 +599,7 @@ six = "*"
 name = "google-auth-oauthlib"
 version = "1.0.0"
 description = "Google Authentication Library"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -555,7 +618,7 @@ tool = ["click (>=6.0.0)"]
 name = "googleapis-common-protos"
 version = "1.59.1"
 description = "Common protobufs used in Google APIs"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -707,7 +770,7 @@ files = [
 name = "httplib2"
 version = "0.22.0"
 description = "A comprehensive HTTP client library."
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 files = [
@@ -1219,7 +1282,7 @@ tests = ["coverage", "pytest"]
 name = "numpy"
 version = "1.25.0"
 description = "Fundamental package for array computing in Python"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.9"
 files = [
@@ -1254,7 +1317,7 @@ files = [
 name = "oauthlib"
 version = "3.2.2"
 description = "A generic, spec-compliant, thorough implementation of the OAuth request-signing logic"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -1320,7 +1383,7 @@ files = [
 name = "pandas"
 version = "1.5.3"
 description = "Powerful data structures for data analysis, time series, and statistics"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.8"
 files = [
@@ -1364,6 +1427,22 @@ pytz = ">=2020.1"
 
 [package.extras]
 test = ["hypothesis (>=5.5.3)", "pytest (>=6.0)", "pytest-xdist (>=1.31)"]
+
+[[package]]
+name = "pandasql"
+version = "0.7.3"
+description = "sqldf for pandas"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "pandasql-0.7.3.tar.gz", hash = "sha256:1eb248869086435a7d85281ebd9fe525d69d9d954a0dceb854f71a8d0fd8de69"},
+]
+
+[package.dependencies]
+numpy = "*"
+pandas = "*"
+sqlalchemy = "*"
 
 [[package]]
 name = "parse"
@@ -1450,7 +1529,7 @@ refresh = ["bioregistry[refresh] (>=0.8.0,<0.9.0)", "rdflib[refresh] (>=6.2.0,<7
 name = "protobuf"
 version = "4.23.3"
 description = ""
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -1473,7 +1552,7 @@ files = [
 name = "pyasn1"
 version = "0.5.0"
 description = "Pure-Python implementation of ASN.1 types and DER/BER/CER codecs (X.208)"
-category = "dev"
+category = "main"
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,>=2.7"
 files = [
@@ -1485,7 +1564,7 @@ files = [
 name = "pyasn1-modules"
 version = "0.3.0"
 description = "A collection of ASN.1-based protocols modules"
-category = "dev"
+category = "main"
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,>=2.7"
 files = [
@@ -1563,6 +1642,25 @@ files = [
 
 [package.extras]
 plugins = ["importlib-metadata"]
+
+[[package]]
+name = "pygsheets"
+version = "2.0.6"
+description = "Google Spreadsheets Python API v4"
+category = "main"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+files = [
+    {file = "pygsheets-2.0.6-py3-none-any.whl", hash = "sha256:3338c2eb8990fdee9f463b42a370ec0870c118d607d775471a6dfb8b08f6cd87"},
+    {file = "pygsheets-2.0.6.tar.gz", hash = "sha256:bff46c812e99f9b8b81a09b456581365281c797620ec08530b0d0e48fa9299e2"},
+]
+
+[package.dependencies]
+google-api-python-client = ">=2.50.0"
+google-auth-oauthlib = ">=0.7.1"
+
+[package.extras]
+pandas = ["pandas (>=0.14.0)"]
 
 [[package]]
 name = "pyjsg"
@@ -1757,7 +1855,7 @@ pytest = ">=2.8.1"
 name = "python-dateutil"
 version = "2.8.2"
 description = "Extensions to the standard Python datetime module"
-category = "dev"
+category = "main"
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
 files = [
@@ -1786,7 +1884,7 @@ sortedcontainers = "*"
 name = "pytz"
 version = "2023.3"
 description = "World timezone definitions, modern and historical"
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 files = [
@@ -1938,7 +2036,7 @@ use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 name = "requests-oauthlib"
 version = "1.3.1"
 description = "OAuthlib authentication support for Requests."
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 files = [
@@ -1984,7 +2082,7 @@ files = [
 name = "rsa"
 version = "4.9"
 description = "Pure-Python RSA implementation"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6,<4"
 files = [
@@ -2097,6 +2195,27 @@ testing = ["build[virtualenv]", "filelock (>=3.4.0)", "flake8-2020", "ini2toml[l
 testing-integration = ["build[virtualenv]", "filelock (>=3.4.0)", "jaraco.envs (>=2.2)", "jaraco.path (>=3.2.0)", "pytest", "pytest-enabler", "pytest-xdist", "tomli", "virtualenv (>=13.0.0)", "wheel"]
 
 [[package]]
+name = "sheets-and-friends"
+version = "0.5.0"
+description = "Enhance a LinkML model with imported and optionally modified slots"
+category = "main"
+optional = false
+python-versions = ">=3.9,<4.0"
+files = [
+    {file = "sheets_and_friends-0.5.0-py3-none-any.whl", hash = "sha256:6b9b43375ac395da2851cdf37089e0a368c077cdbeb9982e64d3650f0eca30be"},
+    {file = "sheets_and_friends-0.5.0.tar.gz", hash = "sha256:25de352377390610e94461e843324f8633119efbe86359bbc745cc92f027aecd"},
+]
+
+[package.dependencies]
+click = ">=8.0.0,<9.0.0"
+click_log = "0.4.0"
+glom = ">=23.1.1,<24.0.0"
+linkml-runtime = ">=1.4.0,<2.0.0"
+pandas = ">=1.3.4,<2.0.0"
+pandasql = ">=0.7.3,<0.8.0"
+pygsheets = ">=2.0.5,<3.0.0"
+
+[[package]]
 name = "shexjsg"
 version = "0.8.2"
 description = "ShExJSG - Astract Syntax Tree for the ShEx 2.0 language"
@@ -2189,7 +2308,7 @@ pandas = ["pandas (>=1.3.5)"]
 name = "sqlalchemy"
 version = "2.0.17"
 description = "Database Abstraction Library"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -2358,7 +2477,7 @@ dev = ["flake8", "flake8-annotations", "flake8-bandit", "flake8-bugbear", "flake
 name = "uritemplate"
 version = "4.1.1"
 description = "Implementation of RFC 6570 URI Templates"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -2546,4 +2665,4 @@ docs = []
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "0f470a096ba021c4ff5a5f93e959b52b293b9dd73c8847ad3872324565b3d97f"
+content-hash = "8a2b30f13ab5f29b6be4a00397d547647f64a65b4c8ba960f905fd66a52a6d04"

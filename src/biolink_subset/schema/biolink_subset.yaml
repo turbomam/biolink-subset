@@ -1,104 +1,827 @@
----
-id: https://w3id.org/turbomam/biolink-subset
-name: biolink-subset
-title: biolink-subset
-description: |-
-  illustrates subsetting the BIlink schema with sheets_and_friends do-shuttle
-license: MIT
-see_also:
-  - https://turbomam.github.io/biolink-subset
-
-prefixes:
-  biolink_subset: https://w3id.org/turbomam/biolink-subset/
-  linkml: https://w3id.org/linkml/
-  biolink: https://w3id.org/biolink/
-  schema: http://schema.org/
-  PATO: http://purl.obolibrary.org/obo/PATO_
-  example: https://example.org/
-default_prefix: biolink_subset
-default_range: string
-
+name: BiolinkShuttle
+description: A schema for receiving Biolink elements via sheets_and_friends do_shuttle
+id: https://example.com/biolink_shuttle
 imports:
-  - linkml:types
-
-classes:
-
-  NamedThing:
-    description: >-
-      A generic grouping for any identifiable entity
-    slots:
-      - id
-      - name
-      - description
-    class_uri: schema:Thing
-
-  entity:
-    is_a: NamedThing
-    description: >-
-      Represents a entity
-    slots:
-      - primary_email
-#      - birth_date # DataHarmoizer is saving date-ranged data as datetimes
-      - age_in_years
-      - vital_status
-    slot_usage:
-      primary_email:
-        pattern: "^\\S+@[\\S+\\.]+\\S+"
-
-  entityCollection:
-    tree_root: true
-    description: >-
-      A holder for entity objects
-    attributes:
-      entries:
-        range: entity
-        multivalued: true
-        inlined: true
-        inlined_as_list: true
-
+- linkml:types
+prefixes:
+  AGRKB:
+    prefix_prefix: AGRKB
+    prefix_reference: https://www.alliancegenome.org/
+  apollo:
+    prefix_prefix: apollo
+    prefix_reference: https://github.com/GMOD/Apollo
+  AspGD:
+    prefix_prefix: AspGD
+    prefix_reference: http://www.aspergillusgenome.org/cgi-bin/locus.pl?dbid=
+  biolink:
+    prefix_prefix: biolink
+    prefix_reference: https://w3id.org/biolink/vocab/
+  bioschemas:
+    prefix_prefix: bioschemas
+    prefix_reference: https://bioschemas.org/
+  linkml:
+    prefix_prefix: linkml
+    prefix_reference: https://w3id.org/linkml/
+  CAID:
+    prefix_prefix: CAID
+    prefix_reference: http://reg.clinicalgenome.org/redmine/projects/registry/genboree_registry/by_caid?caid=
+  CHADO:
+    prefix_prefix: CHADO
+    prefix_reference: http://gmod.org/wiki/Chado/
+  ChemBank:
+    prefix_prefix: ChemBank
+    prefix_reference: http://chembank.broadinstitute.org/chemistry/viewMolecule.htm?cbid=
+  CHEMBL.MECHANISM:
+    prefix_prefix: CHEMBL.MECHANISM
+    prefix_reference: https://www.ebi.ac.uk/chembl/mechanism/inspect/
+  CID:
+    prefix_prefix: CID
+    prefix_reference: http://pubchem.ncbi.nlm.nih.gov/compound/
+  CLINVAR:
+    prefix_prefix: CLINVAR
+    prefix_reference: http://identifiers.org/clinvar
+  COAR_RESOURCE:
+    prefix_prefix: COAR_RESOURCE
+    prefix_reference: http://purl.org/coar/resource_type/
+  COG:
+    prefix_prefix: COG
+    prefix_reference: https://www.ncbi.nlm.nih.gov/research/cog-project/
+  ComplexPortal:
+    prefix_prefix: ComplexPortal
+    prefix_reference: https://www.ebi.ac.uk/complexportal/complex/
+  CPT:
+    prefix_prefix: CPT
+    prefix_reference: https://www.ama-assn.org/practice-management/cpt/
+  CTD.CHEMICAL:
+    prefix_prefix: CTD.CHEMICAL
+    prefix_reference: http://ctdbase.org/detail.go?type=chem&acc=
+  CTD.DISEASE:
+    prefix_prefix: CTD.DISEASE
+    prefix_reference: http://ctdbase.org/detail.go?type=disease&db=MESH&acc=
+  CTD.GENE:
+    prefix_prefix: CTD.GENE
+    prefix_reference: http://ctdbase.org/detail.go?type=gene&acc=
+  CTD:
+    prefix_prefix: CTD
+    prefix_reference: http://ctdbase.org/
+  DGIdb:
+    prefix_prefix: DGIdb
+    prefix_reference: https://www.dgidb.org/interaction_types
+  dcat:
+    prefix_prefix: dcat
+    prefix_reference: http://www.w3.org/ns/dcat#
+  dct:
+    prefix_prefix: dct
+    prefix_reference: http://purl.org/dc/terms/
+  dcid:
+    prefix_prefix: dcid
+    prefix_reference: https://datacommons.org/browser/
+  doi:
+    prefix_prefix: doi
+    prefix_reference: https://doi.org/
+  DOID-PROPERTY:
+    prefix_prefix: DOID-PROPERTY
+    prefix_reference: http://purl.obolibrary.org/obo/doid#
+  DrugCentral:
+    prefix_prefix: DrugCentral
+    prefix_reference: http://drugcentral.org/drugcard/
+  ECTO:
+    prefix_prefix: ECTO
+    prefix_reference: http://purl.obolibrary.org/obo/ECTO_
+  EDAM-DATA:
+    prefix_prefix: EDAM-DATA
+    prefix_reference: http://edamontology.org/data_
+  EDAM-FORMAT:
+    prefix_prefix: EDAM-FORMAT
+    prefix_reference: http://edamontology.org/format_
+  EDAM-OPERATION:
+    prefix_prefix: EDAM-OPERATION
+    prefix_reference: http://edamontology.org/operation_
+  EDAM-TOPIC:
+    prefix_prefix: EDAM-TOPIC
+    prefix_reference: http://edamontology.org/topic_
+  EFO:
+    prefix_prefix: EFO
+    prefix_reference: http://www.ebi.ac.uk/efo/EFO_
+  ExO:
+    prefix_prefix: ExO
+    prefix_reference: http://purl.obolibrary.org/obo/ExO_
+  fabio:
+    prefix_prefix: fabio
+    prefix_reference: http://purl.org/spar/fabio/
+  foaf:
+    prefix_prefix: foaf
+    prefix_reference: http://xmlns.com/foaf/0.1/
+  foodb.food:
+    prefix_prefix: foodb.food
+    prefix_reference: http://foodb.ca/compounds/
+  foodb.compound:
+    prefix_prefix: foodb.compound
+    prefix_reference: http://foodb.ca/foods/
+  FYECO:
+    prefix_prefix: FYECO
+    prefix_reference: https://www.pombase.org/term/
+  FYPO:
+    prefix_prefix: FYPO
+    prefix_reference: http://purl.obolibrary.org/obo/FYPO_
+  gff3:
+    prefix_prefix: gff3
+    prefix_reference: https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md#
+  GOREL:
+    prefix_prefix: GOREL
+    prefix_reference: http://purl.obolibrary.org/obo/GOREL_
+  GOP:
+    prefix_prefix: GOP
+    prefix_reference: http://purl.obolibrary.org/obo/go#
+  gpi:
+    prefix_prefix: gpi
+    prefix_reference: https://github.com/geneontology/go-annotation/blob/master/specs/gpad-gpi-2-0.md#
+  GSID:
+    prefix_prefix: GSID
+    prefix_reference: https://scholar.google.com/citations?user=
+  GTEx:
+    prefix_prefix: GTEx
+    prefix_reference: https://www.gtexportal.org/home/gene/
+  GTOPDB:
+    prefix_prefix: GTOPDB
+    prefix_reference: https://www.guidetopharmacology.org/GRAC/LigandDisplayForward?ligandId=
+  gtpo:
+    prefix_prefix: gtpo
+    prefix_reference: https://rdf.guidetopharmacology.org/ns/gtpo#
+  HANCESTRO:
+    prefix_prefix: HANCESTRO
+    prefix_reference: http://www.ebi.ac.uk/ancestro/ancestro_
+  HCPCS:
+    prefix_prefix: HCPCS
+    prefix_reference: http://purl.bioontology.org/ontology/HCPCS/
+  HsapDv:
+    prefix_prefix: HsapDv
+    prefix_reference: http://purl.obolibrary.org/obo/HsapDv_
+  ICD10:
+    prefix_prefix: ICD10
+    prefix_reference: https://icd.codes/icd9cm/
+  ICD9:
+    prefix_prefix: ICD9
+    prefix_reference: http://translator.ncats.nih.gov/ICD9_
+  interpro:
+    prefix_prefix: interpro
+    prefix_reference: https://www.ebi.ac.uk/interpro/entry/
+  INO:
+    prefix_prefix: INO
+    prefix_reference: http://purl.obolibrary.org/obo/INO_
+  isbn:
+    prefix_prefix: isbn
+    prefix_reference: https://www.isbn-international.org/identifier/
+  isni:
+    prefix_prefix: isni
+    prefix_reference: https://isni.org/isni/
+  issn:
+    prefix_prefix: issn
+    prefix_reference: https://portal.issn.org/resource/ISSN/
+  ncats.drug:
+    prefix_prefix: ncats.drug
+    prefix_reference: https://drugs.ncats.io/drug/
+  KEGG.BRITE:
+    prefix_prefix: KEGG.BRITE
+    prefix_reference: 'https://bioregistry.io/kegg.brite:'
+  KEGG:
+    prefix_prefix: KEGG
+    prefix_reference: http://www.kegg.jp/entry/
+  KEGG.GENES:
+    prefix_prefix: KEGG.GENES
+    prefix_reference: 'https://bioregistry.io/kegg.genes:bsu:'
+  KEGG.PATHWAY:
+    prefix_prefix: KEGG.PATHWAY
+    prefix_reference: 'https://bioregistry.io/kegg.pathway:'
+  KEGG.RCLASS:
+    prefix_prefix: KEGG.RCLASS
+    prefix_reference: 'https://www.genome.jp/dbget-bin/www_bget?rc:'
+  LOINC:
+    prefix_prefix: LOINC
+    prefix_reference: http://loinc.org/rdf/
+  MAXO:
+    prefix_prefix: MAXO
+    prefix_reference: http://purl.obolibrary.org/obo/MAXO_
+  medgen:
+    prefix_prefix: medgen
+    prefix_reference: https://www.ncbi.nlm.nih.gov/medgen/
+  metacyc.reaction:
+    prefix_prefix: metacyc.reaction
+    prefix_reference: 'http://identifiers.org/metacyc.reaction:'
+  METANETX.REACTION:
+    prefix_prefix: METANETX.REACTION
+    prefix_reference: https://www.metanetx.org/equa_info/
+  MESH:
+    prefix_prefix: MESH
+    prefix_reference: http://id.nlm.nih.gov/mesh/
+  MI:
+    prefix_prefix: MI
+    prefix_reference: http://purl.obolibrary.org/obo/MI_
+  mirbase:
+    prefix_prefix: mirbase
+    prefix_reference: http://identifiers.org/mirbase
+  mmmp.biomaps:
+    prefix_prefix: mmmp.biomaps
+    prefix_reference: 'https://bioregistry.io/mmmp.biomaps:'
+  MmusDv:
+    prefix_prefix: MmusDv
+    prefix_reference: http://purl.obolibrary.org/obo/MMUSDV_
+  MSigDB:
+    prefix_prefix: MSigDB
+    prefix_reference: https://www.gsea-msigdb.org/gsea/msigdb/
+  NBO-PROPERTY:
+    prefix_prefix: NBO-PROPERTY
+    prefix_reference: http://purl.obolibrary.org/obo/nbo#
+  ncats.bioplanet:
+    prefix_prefix: ncats.bioplanet
+    prefix_reference: https://tripod.nih.gov/bioplanet/detail.jsp?pid=
+  NCBIGene:
+    prefix_prefix: NCBIGene
+    prefix_reference: http://identifiers.org/ncbigene/
+  NCIT-OBO:
+    prefix_prefix: NCIT-OBO
+    prefix_reference: http://purl.obolibrary.org/obo/ncit#
+  NDDF:
+    prefix_prefix: NDDF
+    prefix_reference: http://purl.bioontology.org/ontology/NDDF/
+  NLMID:
+    prefix_prefix: NLMID
+    prefix_reference: https://www.ncbi.nlm.nih.gov/nlmcatalog/?term=
+  OBAN:
+    prefix_prefix: OBAN
+    prefix_reference: http://purl.org/oban/
+  OMIM.PS:
+    prefix_prefix: OMIM.PS
+    prefix_reference: https://www.omim.org/phenotypicSeries/
+  ORCID:
+    prefix_prefix: ORCID
+    prefix_reference: https://orcid.org/
+  orphanet:
+    prefix_prefix: orphanet
+    prefix_reference: http://www.orpha.net/ORDO/Orphanet_
+  os:
+    prefix_prefix: os
+    prefix_reference: https://github.com/cmungall/owlstar/blob/master/owlstar.ttl
+  PANTHER.FAMILY:
+    prefix_prefix: PANTHER.FAMILY
+    prefix_reference: http://www.pantherdb.org/panther/family.do?clsAccession=
+  PathWhiz:
+    prefix_prefix: PathWhiz
+    prefix_reference: http://smpdb.ca/pathways/#
+  pav:
+    prefix_prefix: pav
+    prefix_reference: http://purl.org/pav/
+  PHARMGKB.CHEMICAL:
+    prefix_prefix: PHARMGKB.CHEMICAL
+    prefix_reference: https://www.pharmgkb.org/chemical/
+  PHARMGKB.DISEASE:
+    prefix_prefix: PHARMGKB.DISEASE
+    prefix_reference: https://www.pharmgkb.org/disease/
+  PHARMGKB.GENE:
+    prefix_prefix: PHARMGKB.GENE
+    prefix_reference: https://www.pharmgkb.org/gene/
+  PHARMGKB.PATHWAYS:
+    prefix_prefix: PHARMGKB.PATHWAYS
+    prefix_reference: https://www.pharmgkb.org/pathway/
+  PHARMGKB.VARIANT:
+    prefix_prefix: PHARMGKB.VARIANT
+    prefix_reference: https://www.pharmgkb.org/variant/
+  PHAROS:
+    prefix_prefix: PHAROS
+    prefix_reference: http://pharos.nih.gov
+  PomBase:
+    prefix_prefix: PomBase
+    prefix_reference: https://www.pombase.org/gene/
+  prov:
+    prefix_prefix: prov
+    prefix_reference: http://www.w3.org/ns/prov#
+  qud:
+    prefix_prefix: qud
+    prefix_reference: http://qudt.org/1.1/schema/qudt#
+  REPODB:
+    prefix_prefix: REPODB
+    prefix_reference: http://apps.chiragjpgroup.org/repoDB/
+  ResearchID:
+    prefix_prefix: ResearchID
+    prefix_reference: https://publons.com/researcher/
+  RO:
+    prefix_prefix: RO
+    prefix_reference: http://purl.obolibrary.org/obo/RO_
+  RXNORM:
+    prefix_prefix: RXNORM
+    prefix_reference: http://purl.bioontology.org/ontology/RXNORM/
+  RXCUI:
+    prefix_prefix: RXCUI
+    prefix_reference: https://mor.nlm.nih.gov/RxNav/search?searchBy=RXCUI&searchTerm=
+  schema:
+    prefix_prefix: schema
+    prefix_reference: http://schema.org/
+  ScopusID:
+    prefix_prefix: ScopusID
+    prefix_reference: https://www.scopus.com/authid/detail.uri?authorId=
+  SEED.REACTION:
+    prefix_prefix: SEED.REACTION
+    prefix_reference: https://modelseed.org/biochem/reactions/
+  SEMMEDDB:
+    prefix_prefix: SEMMEDDB
+    prefix_reference: https://skr3.nlm.nih.gov/SemMedDB
+  SIO:
+    prefix_prefix: SIO
+    prefix_reference: http://semanticscience.org/resource/SIO_
+  SNOMEDCT:
+    prefix_prefix: SNOMEDCT
+    prefix_reference: http://snomed.info/id/
+  SPDI:
+    prefix_prefix: SPDI
+    prefix_reference: https://api.ncbi.nlm.nih.gov/variation/v0/spdi/
+  UBERGRAPH:
+    prefix_prefix: UBERGRAPH
+    prefix_reference: http://translator.renci.org/ubergraph-axioms.ofn#
+  UBERON_CORE:
+    prefix_prefix: UBERON_CORE
+    prefix_reference: http://purl.obolibrary.org/obo/uberon/core#
+  UBERON_NONAMESPACE:
+    prefix_prefix: UBERON_NONAMESPACE
+    prefix_reference: http://purl.obolibrary.org/obo/core#
+  STY:
+    prefix_prefix: STY
+    prefix_reference: http://purl.bioontology.org/ontology/STY/
+  UMLSSG:
+    prefix_prefix: UMLSSG
+    prefix_reference: https://lhncbc.nlm.nih.gov/semanticnetwork/download/sg_archive/SemGroups-v04.txt
+  UniProtKB:
+    prefix_prefix: UniProtKB
+    prefix_reference: http://purl.uniprot.org/uniprot/
+  UNIPROT.ISOFORM:
+    prefix_prefix: UNIPROT.ISOFORM
+    prefix_reference: http://purl.uniprot.org/isoforms/
+  VANDF:
+    prefix_prefix: VANDF
+    prefix_reference: https://www.nlm.nih.gov/research/umls/sourcereleasedocs/current/VANDF/
+  UO-PROPERTY:
+    prefix_prefix: UO-PROPERTY
+    prefix_reference: http://purl.obolibrary.org/obo/uo#
+  VMC:
+    prefix_prefix: VMC
+    prefix_reference: https://github.com/ga4gh/vr-spec/
+  WBls:
+    prefix_prefix: WBls
+    prefix_reference: http://purl.obolibrary.org/obo/WBls_
+  WBbt:
+    prefix_prefix: WBbt
+    prefix_reference: http://purl.obolibrary.org/obo/WBbt_
+  WBVocab:
+    prefix_prefix: WBVocab
+    prefix_reference: http://bio2rdf.org/wormbase_vocabulary
+  WIKIDATA:
+    prefix_prefix: WIKIDATA
+    prefix_reference: https://www.wikidata.org/entity/
+  WIKIDATA_PROPERTY:
+    prefix_prefix: WIKIDATA_PROPERTY
+    prefix_reference: https://www.wikidata.org/prop/
+  wgs:
+    prefix_prefix: wgs
+    prefix_reference: http://www.w3.org/2003/01/geo/wgs84_pos
+  XPO:
+    prefix_prefix: XPO
+    prefix_reference: http://purl.obolibrary.org/obo/XPO_
+  Xenbase:
+    prefix_prefix: Xenbase
+    prefix_reference: http://www.xenbase.org/gene/showgene.do?method=display&geneId=
+  PMC:
+    prefix_prefix: PMC
+    prefix_reference: http://europepmc.org/articles/PMC
+default_prefix: https://example.com/biolink_shuttle/
+default_range: string
+subsets:
+  model_organism_database:
+    name: model_organism_database
+    description: Subset that is relevant for a typical Model Organism Database (MOD)
+    from_schema: https://w3id.org/biolink/biolink-model
+  translator_minimal:
+    name: translator_minimal
+    description: Minimum subset of translator work
+    from_schema: https://w3id.org/biolink/biolink-model
+  samples:
+    name: samples
+    description: Sample/biosample datamodel
+    from_schema: https://w3id.org/biolink/biolink-model
+  testing:
+    name: testing
+    description: TBD
+    from_schema: https://w3id.org/biolink/biolink-model
 slots:
   id:
-    description: A unique identifier for a thing
+    name: id
+    description: A unique identifier for an entity. Must be either a CURIE shorthand
+      for a URI or a complete URI
+    in_subset:
+    - translator_minimal
+    from_schema: https://w3id.org/biolink/biolink-model
+    exact_mappings:
+    - AGRKB:primaryId
+    - gff3:ID
+    - gpi:DB_Object_ID
+    domain: entity
     identifier: true
-    pattern: "[a-zA-Z0-9_]+:[a-zA-Z0-9_]+"
-    range: uriorcurie
     required: true
-    slot_uri: schema:identifier
   name:
-    slot_uri: schema:name
-    description: A human-readable name for a thing
+    name: name
+    description: A human-readable name for an attribute or entity.
+    in_subset:
+    - translator_minimal
+    - samples
+    from_schema: https://w3id.org/biolink/biolink-model
+    aliases:
+    - label
+    - display name
+    - title
+    exact_mappings:
+    - gff3:Name
+    - gpi:DB_Object_Name
+    narrow_mappings:
+    - dct:title
+    - WIKIDATA_PROPERTY:P1476
+    domain: entity
+    slot_uri: rdfs:label
+    range: label type
+  has unit:
+    name: has unit
+    description: connects a quantity value to a unit
+    in_subset:
+    - samples
+    from_schema: https://w3id.org/biolink/biolink-model
+    exact_mappings:
+    - qud:unit
+    - IAO:0000039
+    close_mappings:
+    - EFO:0001697
+    - UO-PROPERTY:is_unit_of
+    narrow_mappings:
+    - SNOMED:has_concentration_strength_denominator_unit
+    - SNOMED:has_concentration_strength_numerator_unit
+    - SNOMED:has_presentation_strength_denominator_unit
+    - SNOMED:has_presentation_strength_numerator_unit
+    - SNOMED:has_unit_of_presentation
+    domain: quantity value
+    multivalued: false
+    range: unit
+  provided by:
+    name: provided by
+    description: The value in this node property represents the knowledge provider
+      that created or assembled the node and all of its attributes.  Used internally
+      to represent how a particular node made its way into a knowledge provider or
+      graph.
+    from_schema: https://w3id.org/biolink/biolink-model
+    is_a: node property
+    multivalued: true
+  has quantitative value:
+    name: has quantitative value
+    description: connects an attribute to a value
+    in_subset:
+    - samples
+    from_schema: https://w3id.org/biolink/biolink-model
+    exact_mappings:
+    - qud:quantityValue
+    narrow_mappings:
+    - SNOMED:has_concentration_strength_numerator_value
+    - SNOMED:has_presentation_strength_denominator_value
+    - SNOMED:has_presentation_strength_numerator_value
+    domain: attribute
+    multivalued: true
+    range: quantity value
+  category:
+    name: category
+    description: "Name of the high level ontology class in which this entity is categorized.\
+      \ Corresponds to the label for the biolink entity type class.\n * In a neo4j\
+      \ database this MAY correspond to the neo4j label tag.\n * In an RDF database\
+      \ it should be a biolink model class URI.\nThis field is multi-valued. It should\
+      \ include values for ancestors of the biolink class; for example, a protein\
+      \ such as Shh would have category values `biolink:Protein`, `biolink:GeneProduct`,\
+      \ `biolink:MolecularEntity`, ...\nIn an RDF database, nodes will typically have\
+      \ an rdf:type triples. This can be to the most specific biolink class, or potentially\
+      \ to a class more specific than something in biolink. For example, a sequence\
+      \ feature `f` may have a rdf:type assertion to a SO class such as TF_binding_site,\
+      \ which is more specific than anything in biolink. Here we would have categories\
+      \ {biolink:GenomicEntity, biolink:MolecularEntity, biolink:NamedThing}"
+    in_subset:
+    - translator_minimal
+    from_schema: https://w3id.org/biolink/biolink-model
+    is_a: type
+    domain: entity
+    multivalued: true
+    designates_type: true
+    is_class_field: true
+    range: category type
+  full name:
+    name: full name
+    description: a long-form human readable name for a thing
+    from_schema: https://w3id.org/biolink/biolink-model
+    is_a: node property
+    domain: named thing
+    range: label type
+  has numeric value:
+    name: has numeric value
+    description: connects a quantity value to a number
+    in_subset:
+    - samples
+    from_schema: https://w3id.org/biolink/biolink-model
+    exact_mappings:
+    - qud:quantityValue
+    domain: quantity value
+    multivalued: false
+    range: double
+  has attribute:
+    name: has attribute
+    description: connects any entity to an attribute
+    in_subset:
+    - samples
+    from_schema: https://w3id.org/biolink/biolink-model
+    exact_mappings:
+    - SIO:000008
+    close_mappings:
+    - OBI:0001927
+    narrow_mappings:
+    - OBAN:association_has_subject_property
+    - OBAN:association_has_object_property
+    - CPT:has_possibly_included_panel_element
+    - DRUGBANK:category
+    - EFO:is_executed_in
+    - HANCESTRO:0301
+    - LOINC:has_action_guidance
+    - LOINC:has_adjustment
+    - LOINC:has_aggregation_view
+    - LOINC:has_approach_guidance
+    - LOINC:has_divisor
+    - LOINC:has_exam
+    - LOINC:has_method
+    - LOINC:has_modality_subtype
+    - LOINC:has_object_guidance
+    - LOINC:has_scale
+    - LOINC:has_suffix
+    - LOINC:has_time_aspect
+    - LOINC:has_time_modifier
+    - LOINC:has_timing_of
+    - NCIT:R88
+    - NCIT:eo_disease_has_property_or_attribute
+    - NCIT:has_data_element
+    - NCIT:has_pharmaceutical_administration_method
+    - NCIT:has_pharmaceutical_basic_dose_form
+    - NCIT:has_pharmaceutical_intended_site
+    - NCIT:has_pharmaceutical_release_characteristics
+    - NCIT:has_pharmaceutical_state_of_matter
+    - NCIT:has_pharmaceutical_transformation
+    - NCIT:is_qualified_by
+    - NCIT:qualifier_applies_to
+    - NCIT:role_has_domain
+    - NCIT:role_has_range
+    - INO:0000154
+    - HANCESTRO:0308
+    - OMIM:has_inheritance_type
+    - orphanet:C016
+    - orphanet:C017
+    - RO:0000053
+    - RO:0000086
+    - RO:0000087
+    - SNOMED:has_access
+    - SNOMED:has_clinical_course
+    - SNOMED:has_count_of_base_of_active_ingredient
+    - SNOMED:has_dose_form_administration_method
+    - SNOMED:has_dose_form_release_characteristic
+    - SNOMED:has_dose_form_transformation
+    - SNOMED:has_finding_context
+    - SNOMED:has_finding_informer
+    - SNOMED:has_inherent_attribute
+    - SNOMED:has_intent
+    - SNOMED:has_interpretation
+    - SNOMED:has_laterality
+    - SNOMED:has_measurement_method
+    - SNOMED:has_method
+    - SNOMED:has_priority
+    - SNOMED:has_procedure_context
+    - SNOMED:has_process_duration
+    - SNOMED:has_property
+    - SNOMED:has_revision_status
+    - SNOMED:has_scale_type
+    - SNOMED:has_severity
+    - SNOMED:has_specimen
+    - SNOMED:has_state_of_matter
+    - SNOMED:has_subject_relationship_context
+    - SNOMED:has_surgical_approach
+    - SNOMED:has_technique
+    - SNOMED:has_temporal_context
+    - SNOMED:has_time_aspect
+    - SNOMED:has_units
+    - UMLS:has_structural_class
+    - UMLS:has_supported_concept_property
+    - UMLS:has_supported_concept_relationship
+    - UMLS:may_be_qualified_by
+    domain: entity
+    multivalued: true
+    range: attribute
   description:
-    slot_uri: schema:description
-    description: A human-readable description for a thing
-  primary_email:
-    slot_uri: schema:email
-    description: The main email address of a person
-  birth_date:
-    slot_uri: schema:birthDate
-    range: date
-    description: Date on which a person is born
-  age_in_years:
-    range: integer
-    description: Number of years since birth
-  vital_status:
-    range: PersonStatus
-    description: living or dead status
-
-enums:
-  PersonStatus:
-    notes:
-      - redundant text properties are currently required for building a DataHarmonizer menu
-    permissible_values:
-      ALIVE:
-        text: ALIVE
-        description: the person is living
-        meaning: PATO:0001421
-      DEAD:
-        text: DEAD
-        description: the person is deceased
-        meaning: PATO:0001422
-      UNKNOWN:
-        text: UNKNOWN
-        description: the vital status is not known
-        todos:
-          - map this to an ontology
+    name: description
+    description: a human-readable description of an entity
+    in_subset:
+    - translator_minimal
+    from_schema: https://w3id.org/biolink/biolink-model
+    aliases:
+    - definition
+    exact_mappings:
+    - IAO:0000115
+    - skos:definitions
+    narrow_mappings:
+    - gff3:Description
+    slot_uri: dct:description
+    range: narrative text
+  xref:
+    name: xref
+    description: A database cross reference or alternative identifier for a NamedThing
+      or edge between two  NamedThings.  This property should point to a database
+      record or webpage that supports the existence of the edge, or  gives more detail
+      about the edge. This property can be used on a node or edge to provide multiple
+      URIs or CURIE cross references.
+    in_subset:
+    - translator_minimal
+    from_schema: https://w3id.org/biolink/biolink-model
+    aliases:
+    - dbxref
+    - Dbxref
+    - DbXref
+    - record_url
+    - source_record_urls
+    narrow_mappings:
+    - gff3:Dbxref
+    - gpi:DB_Xrefs
+    domain: named thing
+    multivalued: true
+    range: uriorcurie
+  has qualitative value:
+    name: has qualitative value
+    description: connects an attribute to a value
+    in_subset:
+    - samples
+    from_schema: https://w3id.org/biolink/biolink-model
+    domain: attribute
+    multivalued: false
+    range: named thing
+  iri:
+    name: iri
+    description: An IRI for an entity. This is determined by the id using expansion
+      rules.
+    in_subset:
+    - translator_minimal
+    - samples
+    from_schema: https://w3id.org/biolink/biolink-model
+    exact_mappings:
+    - WIKIDATA_PROPERTY:P854
+    range: iri type
+  node property:
+    name: node property
+    description: A grouping for any property that holds between a node and a value
+    from_schema: https://w3id.org/biolink/biolink-model
+    domain: named thing
+  has attribute type:
+    name: has attribute type
+    description: connects an attribute to a class that describes it
+    in_subset:
+    - samples
+    from_schema: https://w3id.org/biolink/biolink-model
+    narrow_mappings:
+    - LOINC:has_modality_type
+    - LOINC:has_view_type
+    domain: attribute
+    multivalued: false
+    range: ontology class
+    required: true
+  type:
+    name: type
+    from_schema: https://w3id.org/biolink/biolink-model
+    exact_mappings:
+    - AGRKB:soTermId
+    - gff3:type
+    - gpi:DB_Object_Type
+    domain: entity
+    slot_uri: rdf:type
+    multivalued: true
+classes:
+  entity:
+    name: entity
+    description: Root Biolink Model class for all things and informational relationships,
+      real or imagined.
+    from_schema: https://w3id.org/biolink/biolink-model
+    abstract: true
+    slots:
+    - id
+    - iri
+    - category
+    - type
+    - name
+    - description
+    - has attribute
+  annotation:
+    name: annotation
+    description: Biolink Model root class for entity annotations.
+    from_schema: https://w3id.org/biolink/biolink-model
+    abstract: true
+  ontology class:
+    name: ontology class
+    id_prefixes:
+    - MESH
+    - UMLS
+    - KEGG.BRITE
+    description: a concept or class in an ontology, vocabulary or thesaurus. Note
+      that nodes in a biolink compatible KG can be considered both instances of biolink
+      classes, and OWL classes in their own right. In general you should not need
+      to use this class directly. Instead, use the appropriate biolink class. For
+      example, for the GO concept of endocytosis (GO:0006897), use bl:BiologicalProcess
+      as the type.
+    comments:
+    - This is modeled as a mixin. 'ontology class' should not be the primary type
+      of a node in the KG. Instead you should use an informative bioloink category,
+      such as AnatomicalEntity (for Uberon classes), ChemicalSubstance (for CHEBI
+      or CHEMBL), etc
+    - Note that formally this is a metaclass. Instances of this class are instances
+      in the graph, but can be the object of 'type' edges. For example, if we had
+      a node in the graph representing a specific brain of a specific patient (e.g
+      brain001), this could have a category of bl:Sample, and by typed more specifically
+      with an ontology class UBERON:nnn, which has as category bl:AnatomicalEntity
+    examples:
+    - value: UBERON:0000955
+      description: the class 'brain' from the Uberon anatomy ontology
+    from_schema: https://w3id.org/biolink/biolink-model
+    see_also:
+    - https://github.com/biolink/biolink-model/issues/486
+    exact_mappings:
+    - owl:Class
+    - schema:Class
+    mixin: true
+    slots:
+    - id
+  named thing:
+    name: named thing
+    description: a databased entity or concept/class
+    from_schema: https://w3id.org/biolink/biolink-model
+    exact_mappings:
+    - BFO:0000001
+    - WIKIDATA:Q35120
+    - UMLSSG:OBJC
+    - STY:T071
+    - dcid:Thing
+    is_a: entity
+    slots:
+    - provided by
+    - xref
+    - full name
+    slot_usage:
+      category:
+        name: category
+        domain_of:
+        - entity
+        required: true
+        pattern: ^biolink:[A-Z][A-Za-z]+$
+  attribute:
+    name: attribute
+    id_prefixes:
+    - EDAM-DATA
+    - EDAM-FORMAT
+    - EDAM-OPERATION
+    - EDAM-TOPIC
+    description: A property or characteristic of an entity. For example, an apple
+      may have properties such as color, shape, age, crispiness. An environmental
+      sample may have attributes such as depth, lat, long, material.
+    in_subset:
+    - samples
+    from_schema: https://w3id.org/biolink/biolink-model
+    exact_mappings:
+    - SIO:000614
+    is_a: named thing
+    mixins:
+    - ontology class
+    slots:
+    - name
+    - has attribute type
+    - has quantitative value
+    - has qualitative value
+    - iri
+    slot_usage:
+      name:
+        name: name
+        description: The human-readable 'attribute name' can be set to a string which
+          reflects its context of interpretation, e.g. SEPIO evidence/provenance/confidence
+          annotation or it can default to the name associated with the 'has attribute
+          type' slot ontology term.
+        domain_of:
+        - attribute
+        - entity
+        - macromolecular machine mixin
+  quantity value:
+    name: quantity value
+    description: A value of an attribute that is quantitative and measurable, expressed
+      as a combination of a unit and a numeric value
+    from_schema: https://w3id.org/biolink/biolink-model
+    is_a: annotation
+    slots:
+    - has unit
+    - has numeric value
+source_file: biolink_shuttle_template.yaml

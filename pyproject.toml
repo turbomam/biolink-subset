@@ -10,6 +10,7 @@ include = ["README.md", "src/biolink_subset/schema", "project"]
 [tool.poetry.dependencies]
 python = "^3.9"
 linkml-runtime = "^1.1.24"
+sheets-and-friends = "^0.5.0"
 
 [tool.poetry-dynamic-versioning]
 enable = true

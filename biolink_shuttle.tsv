@@ -1,0 +1,3 @@
+source class	source file or URL	slot	section	column order	destination class
+entity	https://raw.githubusercontent.com/biolink/biolink-model/master/biolink-model.yaml	id	biolink_imports	1	entity
+entity	https://raw.githubusercontent.com/biolink/biolink-model/master/biolink-model.yaml	name	biolink_imports	2	entity

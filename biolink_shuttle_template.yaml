@@ -1,0 +1,6 @@
+name: BiolinkShuttle
+description: A schema for receiving Biolink elements via sheets_and_friends do_shuttle
+id: https://example.com/biolink_shuttle
+imports:
+  - linkml:types
+default_range: string
